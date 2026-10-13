@@ -1,0 +1,309 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Barbearia Lâmina Azul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: coluna única de celular, passos empilhados, barra de resumo fixa no rodapé. Visão do dono em aba separada. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#14202e; --muted:#5b6978; --line:#d9dfe7;
+  --accent:#c8312b; --accent-ink:#ffffff; --navy:#16324f; --navy-ink:#ffffff; --ok:#1f7a4d; --ok-bg:#dff1e6; --busy:#e8ebf0;
+  --display:'Barlow Condensed','Arial Narrow',Arial,sans-serif; --body:'Barlow',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1823; --surface:#16232f; --ink:#e9eef4; --muted:#9fb0c1; --line:#27384a;
+  --accent:#ef5a52; --accent-ink:#1a0504; --navy:#2a4d73; --navy-ink:#ffffff; --ok:#6fd49c; --ok-bg:#16392a; --busy:#1d2c3b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1823; --surface:#16232f; --ink:#e9eef4; --muted:#9fb0c1; --line:#27384a;
+  --accent:#ef5a52; --accent-ink:#1a0504; --navy:#2a4d73; --navy-ink:#ffffff; --ok:#6fd49c; --ok-bg:#16392a; --busy:#1d2c3b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;padding-inline:16px;padding-block:0 120px}
+.wrap{max-width:560px;margin-inline:auto}
+header{padding-block:22px 14px}
+.pole{height:6px;border-radius:3px;background:repeating-linear-gradient(135deg,var(--accent) 0 10px,#fff 10px 20px,var(--navy) 20px 30px);margin-bottom:16px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(38px,11vw,54px);line-height:.95;letter-spacing:.01em;text-transform:uppercase;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:8px 0 0;font-size:14px}
+.tabs{display:flex;gap:6px;margin-block:16px 6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px}
+.tabs button{flex:1;font:inherit;font-weight:600;font-size:14px;padding:9px 8px;border:0;border-radius:7px;background:transparent;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--navy);color:var(--navy-ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.step{margin-top:26px}
+.step h2{font-family:var(--display);font-size:22px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 10px;display:flex;align-items:baseline;gap:10px}
+.step h2 small{font-family:var(--body);font-size:13px;letter-spacing:0;text-transform:none;color:var(--muted);font-weight:500}
+.list{display:flex;flex-direction:column;gap:8px}
+.opt{font:inherit;text-align:left;width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 14px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;cursor:pointer;min-width:0}
+.opt .t{display:flex;flex-direction:column;min-width:0}
+.opt b{font-weight:600}
+.opt span.d{color:var(--muted);font-size:13px}
+.opt .p{font-family:var(--display);font-size:22px;font-weight:700;white-space:nowrap}
+.opt[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.barbers{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.barber{font:inherit;text-align:center;padding:10px 2px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;cursor:pointer;min-width:0}
+.barber .av{width:44px;height:44px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;background:var(--navy);color:var(--navy-ink);font-family:var(--display);font-size:22px;font-weight:700}
+.barber b{display:block;font-size:13px;font-weight:600;overflow-wrap:anywhere;line-height:1.2}
+.barber span{font-size:12px;color:var(--muted)}
+.barber[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+.day{font:inherit;flex:0 0 62px;scroll-snap-align:start;text-align:center;padding:10px 4px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;cursor:pointer}
+.day small{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.day b{font-family:var(--display);font-size:26px;line-height:1.1}
+.day[aria-pressed="true"]{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.day[aria-pressed="true"] small{color:inherit;opacity:.8}
+.day[disabled]{opacity:.4;cursor:not-allowed}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.slot{font:inherit;font-variant-numeric:tabular-nums;font-weight:600;padding:11px 0;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;cursor:pointer}
+.slot[disabled]{background:var(--busy);color:var(--muted);text-decoration:line-through;cursor:not-allowed;border-color:transparent;font-weight:400}
+.slot[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.hint{color:var(--muted);font-size:13px;margin:8px 0 0}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-size:13px;font-weight:600;color:var(--muted)}
+.field input{font:inherit;padding:12px;border:1.5px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);width:100%}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+.bar .in{max-width:560px;margin-inline:auto;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.bar .sum{min-width:0;font-size:13px;color:var(--muted)}
+.bar .sum b{display:block;color:var(--ink);font-size:15px}
+.cta{font:inherit;font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase;border:0;border-radius:10px;padding:12px 20px;background:var(--accent);color:var(--accent-ink);cursor:pointer;white-space:nowrap}
+.cta[disabled]{background:var(--busy);color:var(--muted);cursor:not-allowed}
+.cta.secondary{background:var(--navy);color:var(--navy-ink)}
+.ticket{margin-top:20px;background:var(--surface);border:1.5px dashed var(--line);border-radius:14px;padding:20px}
+.ticket .ok{display:inline-block;background:var(--ok-bg);color:var(--ok);font-weight:600;font-size:13px;padding:4px 10px;border-radius:999px}
+.ticket h2{font-family:var(--display);font-size:34px;text-transform:uppercase;line-height:1;margin:12px 0 4px}
+.ticket dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:16px 0 0}
+.ticket dt{color:var(--muted);font-size:14px}.ticket dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+.chat{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.chat h3{margin:0 0 10px;font-family:var(--display);font-size:20px;letter-spacing:.04em;text-transform:uppercase}
+.bubble{background:var(--ok-bg);color:var(--ink);padding:10px 12px;border-radius:12px 12px 12px 3px;font-size:14px;margin-bottom:8px;max-width:92%}
+.bubble i{display:block;font-style:normal;font-size:11px;color:var(--muted);margin-top:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.panel table{width:100%;border-collapse:collapse;font-size:14px}
+.panel th{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em;font-size:14px;text-align:left;color:var(--muted);padding:8px 6px;border-bottom:1.5px solid var(--line)}
+.panel td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.panel td.h{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--busy);color:var(--muted)}
+.tag.new{background:var(--accent);color:var(--accent-ink)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px}
+.stat b{display:block;font-family:var(--display);font-size:30px;line-height:1}
+.stat span{font-size:12px;color:var(--muted)}
+.table-scroll{overflow-x:auto}
+footer{margin-top:36px;font-size:12px;color:var(--muted)}
+.demo{background:var(--busy);color:var(--muted);font-size:12px;padding:8px 12px;border-radius:8px;margin-top:14px}
+[hidden]{display:none!important}
+@media (max-width:380px){.slots{grid-template-columns:repeat(3,1fr)}}
+@media (prefers-reduced-motion:no-preference){.ticket{animation:rise .35s ease-out}@keyframes rise{from{opacity:.0;transform:translateY(8px)}to{opacity:1;transform:none}}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="pole" aria-hidden="true"></div>
+    <h1>Barbearia Lâmina Azul</h1>
+    <p class="sub">Rua das Acácias, 120 · Centro · Seg a Sex 9h às 19h · Sáb 9h às 16h</p>
+    <div class="tabs" role="tablist" aria-label="Visão da página">
+      <button role="tab" id="tab-c" aria-selected="true" aria-controls="view-c">Agendar (cliente)</button>
+      <button role="tab" id="tab-o" aria-selected="false" aria-controls="view-o">Agenda do dono</button>
+    </div>
+    <p class="demo">Página de demonstração com dados fictícios. Os horários ocupados e o número de WhatsApp são exemplos.</p>
+  </header>
+
+  <main>
+  <section id="view-c" role="tabpanel" aria-labelledby="tab-c">
+    <div id="booking">
+      <div class="step">
+        <h2>1. Serviço</h2>
+        <div class="list" id="services"></div>
+      </div>
+      <div class="step">
+        <h2>2. Profissional <small>ou escolha “Qualquer um”</small></h2>
+        <div class="barbers" id="barbers"></div>
+      </div>
+      <div class="step">
+        <h2>3. Dia</h2>
+        <div class="days" id="days" role="group" aria-label="Escolha o dia"></div>
+      </div>
+      <div class="step">
+        <h2>4. Horário <small id="slotinfo"></small></h2>
+        <div class="slots" id="slots"></div>
+        <p class="hint" id="slothint">Os horários riscados já estão ocupados.</p>
+      </div>
+      <div class="step">
+        <h2>5. Seus dados</h2>
+        <div class="field"><label for="nome">Nome</label><input id="nome" autocomplete="name" placeholder="Seu nome" value="Rafael Souza"></div>
+        <div class="field"><label for="zap">WhatsApp</label><input id="zap" inputmode="tel" autocomplete="tel" placeholder="(34) 9 0000-0000" value="(34) 99999-0000"></div>
+        <p class="hint">Você recebe a confirmação e um lembrete 2 horas antes do horário.</p>
+      </div>
+    </div>
+
+    <div id="done" hidden>
+      <div class="ticket">
+        <span class="ok">Horário reservado</span>
+        <h2 id="d-when"></h2>
+        <dl>
+          <dt>Serviço</dt><dd id="d-serv"></dd>
+          <dt>Profissional</dt><dd id="d-bar"></dd>
+          <dt>Valor</dt><dd id="d-val"></dd>
+          <dt>Cliente</dt><dd id="d-name"></dd>
+        </dl>
+      </div>
+      <div class="chat">
+        <h3>O que o cliente recebe no WhatsApp</h3>
+        <div class="bubble" id="m1"><span></span><i>agora</i></div>
+        <div class="bubble" id="m2"><span></span><i>2 horas antes do horário</i></div>
+      </div>
+      <div class="row">
+        <a class="cta" id="wa" href="#" target="_blank" rel="noopener" style="text-decoration:none;display:inline-block">Enviar para a barbearia</a>
+        <button class="cta secondary" id="again" type="button">Novo agendamento</button>
+      </div>
+      <p class="hint">Na versão real, a confirmação e o lembrete saem sozinhos, sem o cliente precisar enviar nada.</p>
+    </div>
+  </section>
+
+  <section id="view-o" class="panel" role="tabpanel" aria-labelledby="tab-o" hidden>
+    <div class="step" style="margin-top:14px">
+      <h2>Hoje <small id="o-date"></small></h2>
+      <div class="stats">
+        <div class="stat"><b id="s-n">0</b><span>agendamentos</span></div>
+        <div class="stat"><b id="s-v">R$ 0</b><span>previsto no dia</span></div>
+        <div class="stat"><b id="s-f">0</b><span>horários livres</span></div>
+      </div>
+      <div class="table-scroll">
+      <table>
+        <thead><tr><th>Hora</th><th>Cliente</th><th>Serviço</th><th>Prof.</th></tr></thead>
+        <tbody id="o-rows"></tbody>
+      </table></div>
+      <p class="hint">Quando alguém reserva na aba de cliente, o horário aparece aqui no dia escolhido. Troque o dia abaixo para ver outros.</p>
+      <div class="days" id="o-days" role="group" aria-label="Dia da agenda" style="margin-top:10px"></div>
+    </div>
+  </section>
+  </main>
+
+  <footer>Agendamento online feito por [seu nome]. Dados e horários desta página são exemplos.</footer>
+</div>
+
+<div class="bar" id="bar">
+  <div class="in">
+    <div class="sum"><b id="sum1">Escolha um serviço</b><span id="sum2">e um horário para continuar</span></div>
+    <button class="cta" id="go" type="button" disabled>Reservar</button>
+  </div>
+</div>
+
+<script>
+const SERVICES=[
+ {id:'corte',n:'Corte masculino',d:'30 min',m:30,p:45},
+ {id:'barba',n:'Barba com toalha quente',d:'30 min',m:30,p:35},
+ {id:'combo',n:'Corte + barba',d:'1 h',m:60,p:70},
+ {id:'sob',n:'Sobrancelha',d:'30 min',m:30,p:15},
+ {id:'pig',n:'Pigmentação de barba',d:'1 h',m:60,p:50}
+];
+const BARBERS=[{id:'any',n:'Qualquer um',i:'?'},{id:'ze',n:'Zé',i:'Z'},{id:'ca',n:'Caio',i:'C'},{id:'le',n:'Leo',i:'L'}];
+const DOW=['dom','seg','ter','qua','qui','sex','sáb'];
+const DOWF=['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+const MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const $=id=>document.getElementById(id);
+const st={serv:null,bar:'any',day:null,slot:null,odays:null};
+const booked=[]; // reservas feitas na demo
+const today=new Date();today.setHours(0,0,0,0);
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function key(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function open(d){return d.getDay()!==0}
+function hours(d){return d.getDay()===6?[9,16]:[9,19]}
+function hash(s){let h=7;for(const c of s)h=(h*31+c.charCodeAt(0))%9973;return h}
+function times(d){const [a,b]=hours(d);const out=[];for(let m=a*60;m<b*60;m+=30)out.push(m);return out}
+function fmt(m){return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')}
+function seeded(d,b,m){return hash(key(d)+b+m)%5===0}
+function taken(d,b,m){return seeded(d,b,m)||booked.some(x=>key(x.day)===key(d)&&(x.bar===b)&&m>=x.m&&m<x.m+x.dur)}
+function pastNow(d,m){if(key(d)!==key(new Date()))return false;const n=new Date();return m<=n.getHours()*60+n.getMinutes()+30}
+function freeFor(d,m,dur,b){
+  const [,end]=hours(d);if(m+dur>end*60)return false;
+  for(let t=m;t<m+dur;t+=30){if(pastNow(d,t))return false;
+    if(b==='any'){ if(!['ze','ca','le'].some(x=>!taken(d,x,t)))return false } else if(taken(d,b,t))return false }
+  return true
+}
+function pickBarber(d,m,dur){return ['ze','ca','le'].find(x=>{for(let t=m;t<m+dur;t+=30)if(taken(d,x,t))return false;return true})}
+const money=v=>'R$ '+v.toFixed(2).replace('.',',').replace(/,00$/,',00');
+
+function renderServices(){
+  $('services').innerHTML=SERVICES.map(s=>`<button class="opt" type="button" data-s="${s.id}" aria-pressed="${st.serv===s.id}"><span class="t"><b>${s.n}</b><span class="d">${s.d}</span></span><span class="p">${money(s.p)}</span></button>`).join('')
+}
+function renderBarbers(){
+  $('barbers').innerHTML=BARBERS.map(b=>`<button class="barber" type="button" data-b="${b.id}" aria-pressed="${st.bar===b.id}"><div class="av">${b.i}</div><b>${b.n}</b></button>`).join('')
+}
+function dayList(){const a=[];for(let i=0;i<10;i++)a.push(addDays(today,i));return a}
+function renderDays(target,sel,attr){
+  target.innerHTML=dayList().map(d=>{const ok=open(d);return `<button class="day" type="button" ${attr}="${key(d)}" aria-pressed="${sel&&key(sel)===key(d)}" ${ok?'':'disabled'}><small>${DOW[d.getDay()]}</small><b>${d.getDate()}</b><small>${MES[d.getMonth()]}</small></button>`}).join('')
+}
+function renderSlots(){
+  const box=$('slots');
+  if(!st.serv||!st.day){box.innerHTML='';$('slotinfo').textContent='';$('slothint').textContent='Escolha o serviço e o dia para ver os horários.';return}
+  const s=SERVICES.find(x=>x.id===st.serv);
+  $('slotinfo').textContent=DOWF[st.day.getDay()]+', '+st.day.getDate()+' de '+MES[st.day.getMonth()];
+  $('slothint').textContent='Os horários riscados já estão ocupados.';
+  box.innerHTML=times(st.day).map(m=>{const ok=freeFor(st.day,m,s.m,st.bar);return `<button class="slot" type="button" data-m="${m}" aria-pressed="${st.slot===m}" ${ok?'':'disabled'}>${fmt(m)}</button>`}).join('')
+}
+function renderBar(){
+  const s=SERVICES.find(x=>x.id===st.serv);
+  if(!s){$('sum1').textContent='Escolha um serviço';$('sum2').textContent='e um horário para continuar'}
+  else{$('sum1').textContent=s.n+' · '+money(s.p);$('sum2').textContent=st.day&&st.slot!=null?DOWF[st.day.getDay()]+' '+st.day.getDate()+'/'+String(st.day.getMonth()+1).padStart(2,'0')+' às '+fmt(st.slot):'Falta escolher dia e horário'}
+  $('go').disabled=!(s&&st.day&&st.slot!=null&&$('nome').value.trim().length>1&&$('zap').value.replace(/\D/g,'').length>=10)
+}
+function pickDay(k){st.day=dayList().find(d=>key(d)===k);st.slot=null;
+  // se o horário escolhido deixou de existir, limpa
+  renderDays($('days'),st.day,'data-d');renderSlots();renderBar()}
+
+$('services').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;st.serv=b.dataset.s;st.slot=null;renderServices();renderSlots();renderBar()});
+$('barbers').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;st.bar=b.dataset.b;st.slot=null;renderBarbers();renderSlots();renderBar()});
+$('days').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b||b.disabled)return;pickDay(b.dataset.d)});
+$('slots').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b||b.disabled)return;st.slot=+b.dataset.m;renderSlots();renderBar()});
+['nome','zap'].forEach(i=>$(i).addEventListener('input',renderBar));
+
+$('go').addEventListener('click',()=>{
+  const s=SERVICES.find(x=>x.id===st.serv);
+  const barId=st.bar==='any'?pickBarber(st.day,st.slot,s.m):st.bar;
+  const bar=BARBERS.find(b=>b.id===barId);
+  const nome=$('nome').value.trim().split(/\s+/)[0];
+  booked.push({day:st.day,m:st.slot,dur:s.m,bar:barId,serv:s,nome:$('nome').value.trim()});
+  const when=DOWF[st.day.getDay()]+', '+st.day.getDate()+'/'+String(st.day.getMonth()+1).padStart(2,'0')+' às '+fmt(st.slot);
+  $('d-when').textContent=when;$('d-serv').textContent=s.n;$('d-bar').textContent=bar.n;$('d-val').textContent=money(s.p)+' (pago no local)';$('d-name').textContent=$('nome').value.trim();
+  $('m1').firstElementChild.textContent=`Olá, ${nome}! Seu horário na Barbearia Lâmina Azul está confirmado: ${s.n} com ${bar.n}, ${when}. Para remarcar ou cancelar, responda esta mensagem.`;
+  $('m2').firstElementChild.textContent=`${nome}, lembrete: hoje às ${fmt(st.slot)} você tem ${s.n} com ${bar.n} na Lâmina Azul. Rua das Acácias, 120. Te esperamos!`;
+  $('wa').href='https://wa.me/5534900000000?text='+encodeURIComponent(`Olá! Reservei ${s.n} com ${bar.n} para ${when}. Meu nome é ${$('nome').value.trim()}.`);
+  $('booking').hidden=true;$('done').hidden=false;$('bar').hidden=true;window.scrollTo({top:0,behavior:'smooth'});
+  renderOwner();
+});
+$('again').addEventListener('click',()=>{st.slot=null;$('booking').hidden=false;$('done').hidden=true;$('bar').hidden=false;renderSlots();renderBar();window.scrollTo({top:0})});
+
+// aba do dono
+const NOMES=['Marcos Lima','André Costa','Pedro Alves','João Ribeiro','Diego Faria','Lucas Matos','Bruno Reis','Thiago Melo','Caio Nunes','Felipe Dias'];
+function ownerData(d){
+  const rows=[];
+  ['ze','ca','le'].forEach(b=>{
+    let t=times(d);
+    for(let i=0;i<t.length;i++){const m=t[i];
+      if(seeded(d,b,m)){const sv=SERVICES[hash(key(d)+b+m+'s')%3];
+        rows.push({m,nome:NOMES[hash(key(d)+b+m+'n')%NOMES.length],serv:sv.n,price:sv.p,bar:b,isNew:false})}}});
+  booked.filter(x=>key(x.day)===key(d)).forEach(x=>rows.push({m:x.m,nome:x.nome,serv:x.serv.n,price:x.serv.p,bar:x.bar,isNew:true}));
+  return rows.sort((a,b)=>a.m-b.m)
+}
+function renderOwner(){
+  const d=st.odays||today;
+  $('o-date').textContent=DOWF[d.getDay()]+', '+d.getDate()+' de '+MES[d.getMonth()];
+  const rows=ownerData(d);
+  $('o-rows').innerHTML=rows.length?rows.map(r=>`<tr><td class="h">${fmt(r.m)}</td><td>${r.nome} ${r.isNew?'<span class="tag new">novo</span>':''}</td><td>${r.serv}</td><td>${BARBERS.find(b=>b.id===r.bar).n}</td></tr>`).join(''):'<tr><td colspan="4">Sem agendamentos.</td></tr>';
+  $('s-n').textContent=rows.length;
+  $('s-v').textContent='R$ '+rows.reduce((a,r)=>a+r.price,0);
+  const cap=open(d)?times(d).length*3:0;$('s-f').textContent=Math.max(0,cap-rows.length);
+  renderDays($('o-days'),d,'data-o')
+}
+$('o-days').addEventListener('click',e=>{const b=e.target.closest('[data-o]');if(!b||b.disabled)return;st.odays=dayList().find(d=>key(d)===b.dataset.o);renderOwner()});
+
+// abas
+function tab(c){const isC=c==='c';$('view-c').hidden=!isC;$('view-o').hidden=isC;
+  $('tab-c').setAttribute('aria-selected',isC);$('tab-o').setAttribute('aria-selected',!isC);
+  $('bar').hidden=!isC||!$('done').hidden;if(!isC)renderOwner()}
+$('tab-c').onclick=()=>tab('c');$('tab-o').onclick=()=>tab('o');
+
+// estado inicial realista: serviço e dia já escolhidos
+let first=dayList().slice(1).find(open);
+st.serv='combo';
+renderServices();renderBarbers();renderDays($('days'),null,'data-d');pickDay(key(first));
+renderOwner();renderBar();
+</script>

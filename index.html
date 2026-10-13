@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Demonstrações digitais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: coluna única, três cartões de demonstração empilhados, contato no fim. */
+:root{
+  --bg:#f5f4f1; --surface:#ffffff; --ink:#1b1f24; --muted:#5d656e; --line:#dedbd4; --accent:#0f6b5c; --accent-ink:#ffffff;
+  --display:'Bricolage Grotesque',Georgia,serif; --body:'Figtree',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12171a; --surface:#1a2125; --ink:#eef1f2; --muted:#a2adb3; --line:#2a343a; --accent:#5ec8b3; --accent-ink:#06201b; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:28px 48px}
+.wrap{max-width:640px;margin-inline:auto}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,8vw,46px);line-height:1.05;margin:0 0 12px;text-wrap:balance}
+.lead{color:var(--muted);margin:0 0 28px;max-width:52ch}
+.cards{display:flex;flex-direction:column;gap:14px}
+a.card{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+a.card:hover{border-color:var(--accent)}
+a.card:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.tag{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.card h2{font-family:var(--display);font-size:24px;margin:0;line-height:1.15}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.go{margin-top:6px;font-weight:600;color:var(--accent)}
+.note{margin-top:28px;font-size:14px;color:var(--muted)}
+.contact{margin-top:28px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:18px}
+.contact h2{font-family:var(--display);font-size:22px;margin:0 0 6px}
+.contact p{margin:0 0 4px;color:var(--muted)}
+.contact b{color:var(--ink)}
+</style>
+
+<div class="wrap">
+  <h1>Cardápio e agendamento online para o seu negócio</h1>
+  <p class="lead">Veja abaixo como funciona. Cada demonstração é um exemplo com dados fictícios: abra no celular e use como um cliente usaria.</p>
+
+  <div class="cards">
+    <a class="card" href="ferrugem/">
+      <span class="tag">Cardápio com pedido</span>
+      <h2>Ferrugem Burger</h2>
+      <p>Hamburgueria com carrinho e pedido enviado pelo WhatsApp, para retirada ou entrega.</p>
+      <span class="go">Abrir demonstração</span>
+    </a>
+    <a class="card" href="boteco/">
+      <span class="tag">Cardápio só de visualização</span>
+      <h2>Boteco Ponto Final</h2>
+      <p>Cardápio simples para bar e restaurante, com filtros e QR para a mesa. Sem pedido online.</p>
+      <span class="go">Abrir demonstração</span>
+    </a>
+    <a class="card" href="agenda/">
+      <span class="tag">Agendamento online</span>
+      <h2>Barbearia Lâmina Azul</h2>
+      <p>O cliente escolhe serviço, profissional e horário. A confirmação e o lembrete saem pelo WhatsApp.</p>
+      <span class="go">Abrir demonstração</span>
+    </a>
+  </div>
+
+  <div class="contact">
+    <!-- EDITE AQUI: troque pelos seus dados de contato -->
+    <h2>Quer um assim para o seu negócio?</h2>
+    <p>Fale com <b>[seu nome]</b> pelo WhatsApp <b>[seu número]</b>.</p>
+    <p>O cardápio sai com o nome, as cores e a logo do seu negócio.</p>
+  </div>
+
+  <p class="note">As marcas e os nomes das demonstrações são fictícios. Qualquer semelhança é coincidência.</p>
+</div>

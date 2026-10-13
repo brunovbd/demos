@@ -1,0 +1,232 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Boteco Ponto Final</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: green sign banner, sticky category tabs, one printed-menu column with dotted price leaders. View only. */
+:root {
+  --bg: #F0F4F1;
+  --surface: #FFFFFF;
+  --ink: #10261C;
+  --muted: #546459;
+  --line: #B9C7BE;
+  --green: #1D4A37;
+  --green-ink: #EAF3EC;
+  --accent: #C23B2B;
+  --soft: #E2EBE5;
+  --display: 'Bricolage Grotesque', 'Trebuchet MS', 'Arial Narrow', sans-serif;
+  --body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1913; --surface: #15241C; --ink: #E6F0E9; --muted: #9DB1A5; --line: #2F4638;
+    --green: #1A3C2C; --green-ink: #E6F0E9; --accent: #FF7A66; --soft: #1B2D23;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E1913; --surface: #15241C; --ink: #E6F0E9; --muted: #9DB1A5; --line: #2F4638;
+  --green: #1A3C2C; --green-ink: #E6F0E9; --accent: #FF7A66; --soft: #1B2D23;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 0 40px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.col { max-width: 640px; margin-inline: auto; }
+
+.demo { max-width: 640px; margin-inline: auto; padding-block: 12px; font-size: 12px; color: var(--muted); }
+
+.sign { margin-inline: -16px; padding: 36px 16px 32px; background-color: var(--green); color: var(--green-ink);
+  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.055) 0 2px, transparent 2px 14px); }
+.sign .col { display: flex; flex-direction: column; gap: 10px; }
+.est { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; opacity: .8; }
+.sign h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(40px, 12.5vw, 76px); line-height: .95; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.sign h1 em { font-style: normal; color: #FFB4A6; }
+.tag-line { margin: 0; max-width: 40ch; opacity: .9; }
+.info { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 14px; font-weight: 500; }
+
+.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); margin-inline: -16px; padding-inline: 16px; border-bottom: 1px solid var(--line); }
+.tabs-in { display: flex; gap: 22px; overflow-x: auto; max-width: 640px; margin-inline: auto; scrollbar-width: none; }
+.tabs-in::-webkit-scrollbar { display: none; }
+.tab { flex: none; background: none; border: 0; border-bottom: 3px solid transparent; padding: 14px 0 11px; font-family: var(--display); font-weight: 600; font-size: 17px; cursor: pointer; color: var(--muted); }
+.tab[aria-current="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-block: 18px 4px; }
+.filters span { font-size: 13px; color: var(--muted); margin-right: 2px; }
+.f { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 500; cursor: pointer; }
+.f[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+.today { margin-top: 18px; padding: 16px 18px; background: var(--surface); border: 2px solid var(--accent); border-radius: 12px; }
+.today b { display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.today h2 { margin: 0; font-family: var(--display); font-size: 26px; line-height: 1.1; font-weight: 800; }
+.today p { margin: 6px 0 0; color: var(--muted); }
+
+section { scroll-margin-top: 62px; padding-top: 34px; }
+section[hidden] { display: none; }
+h2.cat { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; letter-spacing: -.01em; }
+.sub { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
+.it { padding-block: 14px; border-top: 1px solid var(--soft); }
+.it:first-of-type { border-top: 0; }
+.it[hidden] { display: none; }
+.top { display: flex; align-items: baseline; gap: 8px; }
+.top h3 { margin: 0; font-family: var(--display); font-weight: 600; font-size: 19px; line-height: 1.2; min-width: 0; }
+.lead { flex: 1 1 16px; min-width: 16px; border-bottom: 2px dotted var(--line); align-self: end; margin-bottom: .32em; }
+.price { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.price small { font-size: 12px; font-weight: 500; color: var(--muted); margin-right: 2px; }
+.it p { margin: 3px 0 0; color: var(--muted); font-size: 15px; max-width: 52ch; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tg { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; background: var(--soft); color: var(--ink); }
+.tg.hot { background: var(--accent); color: var(--bg); }
+.empty { margin: 28px 0 0; color: var(--muted); }
+
+.foot { margin-top: 44px; padding-top: 22px; border-top: 2px solid var(--ink); display: grid; gap: 14px; font-size: 14px; color: var(--muted); }
+.foot strong { color: var(--ink); }
+.foot p { margin: 0; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<div class="demo"><span>Cardápio de demonstração de um negócio fictício. Pratos, preços, endereço e telefone são exemplos.</span></div>
+
+<header class="sign">
+  <div class="col">
+    <p class="est">Desde 1998 · Cozinha de boteco</p>
+    <h1>Boteco<br>Ponto <em>Final</em></h1>
+    <p class="tag-line">Petiscos para dividir, pratos de panela e chopp tirado na hora.</p>
+    <ul class="info">
+      <li>Terça a domingo, 12h às 23h</li>
+      <li>Rua do Exemplo, 120 · Centro</li>
+    </ul>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Seções do cardápio"><div class="tabs-in" id="tabs"></div></nav>
+
+<main class="col">
+  <div class="filters" role="group" aria-label="Filtrar pratos">
+    <span>Mostrar:</span>
+    <button type="button" class="f" data-f="all" aria-pressed="true">Tudo</button>
+    <button type="button" class="f" data-f="veg" aria-pressed="false">Vegetariano</button>
+    <button type="button" class="f" data-f="gf" aria-pressed="false">Sem glúten</button>
+  </div>
+
+  <aside class="today" aria-label="Sugestão do dia">
+    <b>Sábado</b>
+    <h2>Feijoada completa</h2>
+    <p>Feijão preto com carnes, arroz, couve, farofa, torresmo e laranja. Serve duas pessoas. R$ 89,00.</p>
+  </aside>
+
+  <div id="menu"></div>
+  <p class="empty" id="empty" hidden>Nenhum item com esse filtro.</p>
+
+  <footer class="foot">
+    <p><strong>Reservas e dúvidas:</strong> (21) 90000-0000. Número de exemplo.</p>
+    <p><strong>Alergias:</strong> avise o garçom antes de pedir. A cozinha é única, então pode haver contato cruzado com glúten e outros alérgenos.</p>
+    <p>A venda de bebidas alcoólicas é proibida para menores de 18 anos. Preços sujeitos a alteração. Atualizado em 13/10/2026.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var BRL = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  /* No serviço real, estes itens vêm de uma planilha que o dono edita. */
+  var CATS = [
+    { id: 'petiscos', name: 'Petiscos', note: 'Para dividir na mesa.' },
+    { id: 'pratos', name: 'Pratos', note: 'Servem uma pessoa, salvo quando indicado.' },
+    { id: 'bebidas', name: 'Bebidas', note: 'Sucos feitos na hora, sem açúcar, a menos que você peça.' },
+    { id: 'cervejas', name: 'Cervejas e chopp', note: 'Bem geladas.' },
+    { id: 'sobremesas', name: 'Sobremesas', note: 'Receitas da casa.' }
+  ];
+  var ITEMS = [
+    { c: 'petiscos', n: 'Pastel de feira', d: 'Seis unidades, de queijo ou de carne, com molho de pimenta da casa.', p: 28, t: [] },
+    { c: 'petiscos', n: 'Bolinho de bacalhau', d: 'Oito unidades crocantes, com limão e maionese de ervas.', p: 36, t: [] },
+    { c: 'petiscos', n: 'Torresmo de rolo', d: 'Fatias fritas na hora, com farinha de mandioca.', p: 32, t: ['gf'] },
+    { c: 'petiscos', n: 'Mandioca frita', d: 'Com molho de alho assado.', p: 26, t: ['veg', 'gf'] },
+    { c: 'petiscos', n: 'Calabresa acebolada', d: 'Calabresa artesanal na chapa, cebola e pão de fôrma tostado.', p: 34, t: [] },
+
+    { c: 'pratos', n: 'Feijão tropeiro', d: 'Feijão, farinha, bacon, linguiça, couve e ovo. Acompanha arroz.', p: 44, t: ['2'] },
+    { c: 'pratos', n: 'Moqueca de peixe', d: 'Peixe branco, leite de coco, dendê e pimentões. Arroz e pirão.', p: 78, t: ['2', 'gf'] },
+    { c: 'pratos', n: 'Filé à parmegiana', d: 'Filé empanado com molho de tomate e muçarela gratinada. Arroz e batata frita.', p: 56, t: [] },
+    { c: 'pratos', n: 'Risoto de cogumelos', d: 'Arroz arbóreo, cogumelos frescos e parmesão.', p: 52, t: ['veg'] },
+    { c: 'pratos', n: 'Salada de grão-de-bico', d: 'Grão-de-bico, tomate, pepino, cebola roxa e hortelã.', p: 34, t: ['veg', 'gf'] },
+
+    { c: 'bebidas', n: 'Suco da fruta', d: 'Laranja, maracujá, abacaxi com hortelã ou acerola. 400 ml.', p: 11, t: ['veg', 'gf'] },
+    { c: 'bebidas', n: 'Limonada suíça', d: 'Limão batido com leite condensado. 400 ml.', p: 13, t: ['veg', 'gf'] },
+    { c: 'bebidas', n: 'Caipirinha', d: 'Limão, cachaça artesanal, açúcar e gelo. Contém álcool.', p: 22, t: ['veg', 'gf'] },
+    { c: 'bebidas', n: 'Refrigerante lata', d: 'Cola, guaraná ou limão. 350 ml.', p: 7, t: [] },
+    { c: 'bebidas', n: 'Água', d: 'Com ou sem gás. 500 ml.', p: 5, t: ['veg', 'gf'] },
+
+    { c: 'cervejas', n: 'Chopp pilsen', d: 'Tirado na pressão. 300 ml.', p: 10, t: [] },
+    { c: 'cervejas', n: 'Chopp IPA', d: 'Lúpulo marcante, amargor médio. 300 ml.', p: 12, t: [] },
+    { c: 'cervejas', n: 'Long neck', d: 'Pilsen ou puro malte. 330 ml.', p: 12, t: [] },
+    { c: 'cervejas', n: 'Garrafa 600 ml', d: 'Pilsen para dividir.', p: 18, t: [] },
+
+    { c: 'sobremesas', n: 'Pudim de leite', d: 'Calda de caramelo e uma pitada de sal.', p: 16, t: ['veg', 'gf'] },
+    { c: 'sobremesas', n: 'Doce de leite com queijo', d: 'Doce cremoso com queijo minas curado.', p: 18, t: ['veg', 'gf'] },
+    { c: 'sobremesas', n: 'Sorvete artesanal', d: 'Duas bolas: coco queimado, cupuaçu ou chocolate meio amargo.', p: 17, t: ['veg'] }
+  ];
+  var LABEL = { veg: 'Vegetariano', gf: 'Sem glúten', '2': 'Serve 2' };
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var $ = function (id) { return document.getElementById(id); };
+  var tabs = $('tabs'), menu = $('menu');
+
+  CATS.forEach(function (c) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'tab'; b.textContent = c.name; b.dataset.cat = c.id;
+    b.addEventListener('click', function () { $('cat-' + c.id).scrollIntoView({ block: 'start' }); });
+    tabs.appendChild(b);
+
+    var sec = document.createElement('section');
+    sec.id = 'cat-' + c.id;
+    var h = '<h2 class="cat">' + esc(c.name) + '</h2><p class="sub">' + esc(c.note) + '</p>';
+    ITEMS.filter(function (i) { return i.c === c.id; }).forEach(function (i) {
+      var tg = i.t.map(function (k) { return '<span class="tg">' + LABEL[k] + '</span>'; }).join('');
+      h += '<div class="it" data-t="' + i.t.join(' ') + '"><div class="top"><h3>' + esc(i.n) + '</h3><span class="lead" aria-hidden="true"></span>' +
+        '<span class="price"><small>R$</small>' + BRL.format(i.p) + '</span></div><p>' + esc(i.d) + '</p>' +
+        (tg ? '<div class="tags">' + tg + '</div>' : '') + '</div>';
+    });
+    sec.innerHTML = h;
+    menu.appendChild(sec);
+  });
+
+  var tabEls = Array.prototype.slice.call(tabs.children);
+  function setActive(id) {
+    tabEls.forEach(function (t) {
+      var on = t.dataset.cat === id;
+      if (on) { t.setAttribute('aria-current', 'true'); tabs.scrollTo({ left: t.offsetLeft - tabs.clientWidth / 2 + t.clientWidth / 2, behavior: 'smooth' }); }
+      else t.removeAttribute('aria-current');
+    });
+  }
+  setActive(CATS[0].id);
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (en) { if (en.isIntersecting) setActive(en.target.id.replace('cat-', '')); });
+    }, { rootMargin: '-25% 0px -70% 0px' });
+    CATS.forEach(function (c) { io.observe($('cat-' + c.id)); });
+  }
+
+  /* Filtro simples por perfil alimentar */
+  var btns = document.querySelectorAll('.f');
+  Array.prototype.forEach.call(btns, function (b) {
+    b.addEventListener('click', function () {
+      var f = b.dataset.f, shown = 0;
+      Array.prototype.forEach.call(btns, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      Array.prototype.forEach.call(menu.children, function (sec) {
+        var any = 0;
+        Array.prototype.forEach.call(sec.querySelectorAll('.it'), function (it) {
+          var ok = f === 'all' || it.dataset.t.split(' ').indexOf(f) > -1;
+          it.hidden = !ok; if (ok) any++;
+        });
+        sec.hidden = any === 0; shown += any;
+        $('tabs').querySelector('[data-cat="' + sec.id.replace('cat-', '') + '"]').hidden = any === 0;
+      });
+      $('empty').hidden = shown !== 0;
+    });
+  });
+})();
+</script>
