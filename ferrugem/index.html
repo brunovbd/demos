@@ -6,35 +6,38 @@
 <style>
 /* Layout: wordmark header, sticky category rail, two-column card grid on wide screens, fixed order bar at the bottom. */
 :root {
-  --bg: #EEF1F3;
-  --surface: #FFFFFF;
-  --ink: #14213D;
-  --muted: #566277;
-  --line: #D5DBE3;
-  --accent: #D2441C;
+  --bg: #F3EBDC;
+  --surface: #FFFBF3;
+  --ink: #1F1612;
+  --muted: #6B5B50;
+  --line: #DDCFB9;
+  --accent: #B93E14;
   --accent-ink: #FFFFFF;
-  --art-bg: #E6ECF2;
-  --chip: #DFE5EC;
+  --art-bg: #EADCC3;
+  --chip: #E8D9BF;
+  --metal: #1C1512;
+  --metal-ink: #F3E3C8;
   --scrim: rgba(12, 18, 30, .55);
   --display: 'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif;
   --body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0D1524; --surface: #16213A; --ink: #EAF0F7; --muted: #9DABC0; --line: #27334F;
-    --accent: #FF6F4A; --accent-ink: #1A0B06; --art-bg: #1F2C4B; --chip: #1F2B46; --scrim: rgba(0, 0, 0, .6);
+    --bg: #15100D; --surface: #211914; --ink: #F3E6D3; --muted: #B3A18F; --line: #3A2D24;
+    --accent: #F0743A; --accent-ink: #1A0B06; --art-bg: #2C2119; --chip: #2E231B; --scrim: rgba(0, 0, 0, .6);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0D1524; --surface: #16213A; --ink: #EAF0F7; --muted: #9DABC0; --line: #27334F;
-  --accent: #FF6F4A; --accent-ink: #1A0B06; --art-bg: #1F2C4B; --chip: #1F2B46; --scrim: rgba(0, 0, 0, .6);
+  --bg: #15100D; --surface: #211914; --ink: #F3E6D3; --muted: #B3A18F; --line: #3A2D24;
+    --accent: #F0743A; --accent-ink: #1A0B06; --art-bg: #2C2119; --chip: #2E231B; --scrim: rgba(0, 0, 0, .6);
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
+  margin: 0;
   background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45;
   padding-inline: 16px; padding-block: 0 140px;
 }
@@ -45,9 +48,20 @@ button, input, textarea { font: inherit; color: inherit; }
 .demo { display: flex; gap: 8px; align-items: center; padding-block: 12px; font-size: 12px; color: var(--muted); }
 .demo i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; }
 
-.hero { padding-block: 8px 24px; }
+.hero { position: relative; margin-inline: -16px; padding: 28px 16px 26px; color: var(--metal-ink); overflow: hidden; isolation: isolate;
+  background-color: var(--metal);
+  background-image: linear-gradient(180deg, rgba(20,13,10,.55), rgba(20,13,10,.92)), var(--hero-img),
+    radial-gradient(60% 80% at 8% 100%, rgba(185,62,20,.55), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 3px, transparent 3px 11px);
+  background-size: cover, cover, auto, auto; background-position: center; }
+.hero .wrap { display: flex; flex-direction: column; gap: 4px; }
+.logo { width: 76px; height: 76px; margin-bottom: 10px; }
+.stripe { height: 10px; margin-inline: -16px; background: repeating-linear-gradient(-45deg, var(--accent) 0 14px, var(--metal) 14px 28px); }
+.hero .kicker { color: #E8C9A0; }
+.hero .facts li { background: rgba(243,227,200,.12); border: 1px solid rgba(243,227,200,.22); color: var(--metal-ink); }
+.slogan { margin: 14px 0 0; font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: .05em; text-transform: uppercase; color: #F6B58F; }
 .kicker { margin: 0 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.brand { margin: 0; font-family: var(--display); font-weight: 800; text-transform: uppercase; line-height: .82; letter-spacing: -.01em; font-size: clamp(52px, 15vw, 150px); max-width: 100%; overflow-wrap: anywhere; }
+.brand { margin: 0; color: #FBEFD9; font-family: var(--display); font-weight: 800; text-transform: uppercase; line-height: .82; letter-spacing: -.01em; font-size: clamp(52px, 15vw, 150px); max-width: 100%; overflow-wrap: anywhere; }
 .brand span { display: block; font-size: .3em; letter-spacing: .26em; font-weight: 700; color: var(--accent); margin-top: .22em; line-height: 1; }
 .facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
 .facts li { background: var(--chip); border-radius: 8px; padding: 6px 10px; font-size: 13px; font-weight: 600; }
@@ -56,10 +70,11 @@ button, input, textarea { font: inherit; color: inherit; }
 .rail-in { display: flex; gap: 8px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; max-width: 960px; margin-inline: auto; }
 .rail-in::-webkit-scrollbar { display: none; }
 .chip { flex: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 16px; font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; line-height: 1.1; }
-.chip[aria-current="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip[aria-current="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 
+h2::after { content: ''; flex: 1; height: 6px; background: repeating-linear-gradient(-45deg, var(--accent) 0 5px, transparent 5px 10px); opacity: .55; }
 section { scroll-margin-top: 72px; padding-top: 28px; }
-h2 { margin: 0; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 38px; line-height: 1; letter-spacing: .01em; }
+h2 { margin: 0; display: flex; align-items: center; gap: 12px; font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 38px; line-height: 1; letter-spacing: .01em; }
 .note { margin: 6px 0 16px; color: var(--muted); max-width: 52ch; }
 
 .grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
@@ -73,7 +88,8 @@ h2 { margin: 0; font-family: var(--display); font-weight: 800; text-transform: u
 .price { font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; }
 .tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 6px; padding: 2px 7px; border: 1px solid var(--line); color: var(--muted); }
 .tag.top { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.art { width: 104px; height: 104px; border-radius: 12px; background: var(--art-bg); display: grid; place-items: center; }
+.art { position: relative; width: 104px; height: 104px; border-radius: 12px; background: var(--art-bg); display: grid; place-items: center; overflow: hidden; }
+.art img, .big-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .art svg { width: 100%; height: 100%; display: block; }
 .quick { position: absolute; right: 8px; bottom: 8px; width: 38px; height: 38px; border-radius: 50%; border: 3px solid var(--surface); background: var(--accent); color: var(--accent-ink); font-size: 24px; line-height: 1; font-weight: 600; cursor: pointer; display: grid; place-items: center; padding: 0; }
 
@@ -83,8 +99,8 @@ h2 { margin: 0; font-family: var(--display); font-weight: 800; text-transform: u
 .sheet-head { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
 .sheet h3 { margin: 0; font-family: var(--display); font-size: 34px; line-height: 1; text-transform: uppercase; font-weight: 800; }
 .x { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); cursor: pointer; font-size: 20px; line-height: 1; }
-.big-art { width: min(100%, 220px); aspect-ratio: 1; margin: 12px auto; border-radius: 16px; background: var(--art-bg); }
-.big-art svg { width: 100%; height: 100%; display: block; }
+.big-art { position: relative; overflow: hidden; width: 100%; aspect-ratio: 4 / 3; max-height: 240px; margin: 12px auto; border-radius: 16px; background: var(--art-bg); display: grid; place-items: center; }
+.big-art svg { width: 220px; height: 220px; max-width: 100%; display: block; }
 .stack { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
 .lbl { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
 .field { width: 100%; border: 1px solid var(--line); background: var(--bg); border-radius: 10px; padding: 11px 12px; }
@@ -121,6 +137,8 @@ textarea.field { resize: vertical; min-height: 64px; }
 .bar .tot { font-variant-numeric: tabular-nums; }
 .toast { position: fixed; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; max-width: calc(100% - 32px); }
 
+.credits { margin: 8px 0 0; font-size: 12px; }
+.credits a { color: inherit; }
 .foot { margin-top: 40px; padding-block: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -132,20 +150,26 @@ textarea.field { resize: vertical; min-height: 64px; }
 <div class="wrap">
   <div class="demo"><i aria-hidden="true"></i><span>Cardápio de demonstração de um negócio fictício. Pratos, preços e número de WhatsApp são exemplos.</span></div>
 
-  <header class="hero">
-    <p class="kicker">Hamburgueria artesanal</p>
-    <h1 class="brand">Ferrugem<span>Burger &amp; Chapa</span></h1>
-    <ul class="facts">
-      <li>Aberto até 23h</li>
-      <li>30 a 40 min</li>
-      <li>Retirada · Entrega · Na mesa</li>
-    </ul>
+  <header class="hero" style="--hero-img:url('https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=1000&q=70')">
+    <div class="wrap">
+      <svg class="logo" viewBox="0 0 80 80" role="img" aria-label="Logotipo Ferrugem Burger"><path d="M40 3 L72 21 V59 L40 77 L8 59 V21 Z" fill="#B93E14" stroke="#F3E3C8" stroke-width="3"/><path d="M40 11 L65 25 V55 L40 69 L15 55 V25 Z" fill="none" stroke="#F3E3C8" stroke-width="1.5" stroke-dasharray="3 3"/><text x="40" y="53" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="800" font-size="38" fill="#FBEFD9">F</text><path d="M24 58 H56" stroke="#F3E3C8" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <p class="kicker">Hamburgueria artesanal · desde 2019</p>
+      <h1 class="brand">Ferrugem<span>Burger &amp; Chapa</span></h1>
+      <p class="slogan">Carne na chapa. Sem frescura.</p>
+      <ul class="facts">
+        <li>Aberto até 23h</li>
+        <li>30 a 40 min</li>
+        <li>Retirada · Entrega · Na mesa</li>
+      </ul>
+    </div>
   </header>
+  <div class="stripe" aria-hidden="true"></div>
 
   <nav class="rail" aria-label="Categorias do cardápio"><div class="rail-in" id="rail"></div></nav>
   <main id="menu"></main>
 
-  <footer class="foot">Cardápio digital feito sob medida. A atualização de preços e pratos é feita por planilha, sem precisar de programador.</footer>
+  <footer class="foot">Cardápio digital feito sob medida. A atualização de preços e pratos é feita por planilha, sem precisar de programador.
+    <p class="credits">Fotos: Unsplash (amirali mirhashemian, Eiliv Aceron, Ilya Mashkov, Mae Mu, David Foodphototasty, sk, Mitchell Luo, Jonathan Borba, Huynh Quyet, engin akyurt, Hybrid Storytellers, Chad Montano). Imagens ilustrativas.</p></footer>
 </div>
 
 <div class="bar" id="bar" hidden>
@@ -290,32 +314,54 @@ textarea.field { resize: vertical; min-height: 64px; }
   /* ---------- Dados do cardápio (no serviço real vêm de uma planilha) ---------- */
   var CATS = [
     { id: 'burgers', name: 'Burgers', note: 'Pão brioche, blend de 160 g selado na chapa e molho da casa.' },
-    { id: 'combos', name: 'Combos', note: 'Burger, fritas e refrigerante pelo preço de um lanche e meio.' },
+    { id: 'frango', name: 'Frango e veggie', note: 'Para quem foge da carne vermelha.' },
+    { id: 'combos', name: 'Combos', note: 'Burger, fritas e bebida pelo preço de um lanche e meio.' },
     { id: 'porcoes', name: 'Porções', note: 'Para dividir na mesa ou comer sozinho.' },
     { id: 'bebidas', name: 'Bebidas', note: 'Geladas, direto da câmara.' },
-    { id: 'sobremesas', name: 'Sobremesas', note: 'Feitas na casa, todo dia.' }
+    { id: 'sobremesas', name: 'Sobremesas', note: 'Feitas na casa, todo dia.' },
+    { id: 'extras', name: 'Adicionais', note: 'Capriche no seu burger.' }
   ];
   var CLASS = ['bunB', 'patty', 'cheese', 'tomato', 'lettuce', 'topBun'];
+  var DBL = ['bunB', 'patty', 'cheese', 'patty', 'cheese', 'bacon', 'onion', 'topBun'];
+  var BCN = ['bunB', 'patty', 'cheese', 'bacon', 'onion', 'topBun'];
+  var CHK = ['bunB', 'patty', 'lettuce', 'tomato', 'topBun'];
   var ITEMS = [
-    { id: 'classico', cat: 'burgers', name: 'Ferrugem Clássico', desc: 'Blend de 160 g, cheddar derretido, alface, tomate e molho da casa no pão brioche.', price: 34.9, tags: ['top'], art: { k: 'burger', layers: CLASS } },
-    { id: 'fume', cat: 'burgers', name: 'Duplo Fumê', desc: 'Dois smash de 90 g, cheddar duplo, bacon crocante e cebola caramelizada.', price: 42.9, tags: [], art: { k: 'burger', layers: ['bunB', 'patty', 'cheese', 'patty', 'cheese', 'bacon', 'onion', 'topBun'] } },
-    { id: 'picante', cat: 'burgers', name: 'Brasa Picante', desc: 'Blend de 160 g, queijo pepper jack, jalapeño e maionese de chipotle.', price: 38.9, tags: ['Picante'], art: { k: 'burger', layers: ['bunB', 'patty', 'cheese', 'jala', 'lettuce', 'topBun'] } },
-    { id: 'cogumelo', cat: 'burgers', name: 'Horta na Chapa', desc: 'Hambúrguer de grão-de-bico e cogumelos, muçarela, tomate e rúcula.', price: 36.9, tags: ['Vegetariano'], art: { k: 'burger', layers: ['bunB', 'vpatty', 'cheese', 'tomato', 'lettuce', 'topBun'] } },
+    { id: 'classico', cat: 'burgers', name: 'Ferrugem Clássico', desc: 'Blend de 160 g, cheddar derretido, alface, tomate e molho da casa no pão brioche.', price: 34.9, tags: ['top'], art: { k: 'burger', layers: CLASS }, img: '1568901346375-23c9450c58cd' },
+    { id: 'fume', cat: 'burgers', name: 'Duplo Fumê', desc: 'Dois smash de 90 g, cheddar duplo, bacon crocante e cebola caramelizada.', price: 42.9, tags: ['top'], art: { k: 'burger', layers: DBL }, img: '1572802419224-296b0aeee0d9' },
+    { id: 'bacon', cat: 'burgers', name: 'Bacon Ferrugem', desc: 'Blend de 160 g, cheddar, bacon em fatias, cebola crispy e barbecue defumado.', price: 39.9, tags: [], art: { k: 'burger', layers: BCN }, img: '1586190848861-99aa4a171e90' },
+    { id: 'picante', cat: 'burgers', name: 'Brasa Picante', desc: 'Blend de 160 g, queijo pepper jack, jalapeño e maionese de chipotle.', price: 38.9, tags: ['Picante'], art: { k: 'burger', layers: ['bunB', 'patty', 'cheese', 'jala', 'lettuce', 'topBun'] }, img: '1571091718767-18b5b1457add' },
+    { id: 'triplo', cat: 'burgers', name: 'Triplo Oxidado', desc: 'Três smash de 90 g, cheddar, picles, cebola e molho da casa. Só para os fortes.', price: 54.9, tags: [], art: { k: 'burger', layers: ['bunB', 'patty', 'cheese', 'patty', 'cheese', 'patty', 'cheese', 'onion', 'topBun'] }, img: '1607013251379-e6eecfffe234' },
+    { id: 'smash', cat: 'burgers', name: 'Smash da Casa', desc: 'Um smash de 90 g bem crocante nas bordas, queijo prato e maionese. Lanche leve.', price: 26.9, tags: [], art: { k: 'burger', layers: ['bunB', 'patty', 'cheese', 'topBun'] }, img: '1610440042657-612c34d95e9f' },
 
-    { id: 'combo1', cat: 'combos', name: 'Combo Clássico', desc: 'Ferrugem Clássico, batata rústica individual e refrigerante em lata.', price: 49.9, tags: ['top'], art: { k: 'combo', layers: CLASS } },
-    { id: 'combo2', cat: 'combos', name: 'Combo Duplo', desc: 'Duplo Fumê, batata rústica individual e refrigerante em lata.', price: 58.9, tags: [], art: { k: 'combo', layers: ['bunB', 'patty', 'cheese', 'patty', 'cheese', 'bacon', 'onion', 'topBun'] } },
+    { id: 'frango', cat: 'frango', name: 'Frango Crocante', desc: 'Filé de frango empanado, queijo prato, alface e maionese de ervas.', price: 36.9, tags: [], art: { k: 'burger', layers: CHK }, img: '1703219342329-fce8488cf443' },
+    { id: 'cogumelo', cat: 'frango', name: 'Horta na Chapa', desc: 'Hambúrguer de grão-de-bico e cogumelos, muçarela, tomate e rúcula.', price: 36.9, tags: ['Vegetariano'], art: { k: 'burger', layers: ['bunB', 'vpatty', 'cheese', 'tomato', 'lettuce', 'topBun'] }, img: '1550547660-d9450f859349' },
+    { id: 'veggie2', cat: 'frango', name: 'Veggie Brasa', desc: 'Burger vegetal grelhado, cebola roxa, picles e maionese de alho assado.', price: 38.9, tags: ['Vegetariano'], art: { k: 'burger', layers: ['bunB', 'vpatty', 'onion', 'lettuce', 'topBun'] } },
 
-    { id: 'batata', cat: 'porcoes', name: 'Batata Rústica', desc: 'Batata com casca, sal de alecrim e maionese defumada.', price: 22.9, tags: [], art: { k: 'fries' } },
+    { id: 'combo1', cat: 'combos', name: 'Combo Clássico', desc: 'Ferrugem Clássico, batata rústica individual e refrigerante em lata.', price: 49.9, tags: ['top'], art: { k: 'combo', layers: CLASS }, img: '1551782450-a2132b4ba21d' },
+    { id: 'combo2', cat: 'combos', name: 'Combo Duplo', desc: 'Duplo Fumê, batata rústica individual e refrigerante em lata.', price: 58.9, tags: [], art: { k: 'combo', layers: DBL }, img: '1565299507177-b0ac66763828' },
+    { id: 'combo3', cat: 'combos', name: 'Combo Frango', desc: 'Frango Crocante, batata rústica individual e refrigerante em lata.', price: 51.9, tags: [], art: { k: 'combo', layers: CHK } },
+    { id: 'combo4', cat: 'combos', name: 'Combo Casal', desc: 'Dois Clássicos, uma batata grande para dividir e dois refrigerantes.', price: 96.9, tags: ['Economia'], art: { k: 'combo', layers: CLASS } },
+
+    { id: 'batata', cat: 'porcoes', name: 'Batata Rústica', desc: 'Batata com casca, sal de alecrim e maionese defumada.', price: 22.9, tags: [], art: { k: 'fries' }, img: '1630384060421-cb20d0e0649d' },
+    { id: 'batatacb', cat: 'porcoes', name: 'Batata Cheddar e Bacon', desc: 'Batata rústica coberta de cheddar cremoso e farofa de bacon.', price: 32.9, tags: ['top'], art: { k: 'fries' }, img: '1573080496219-bb080dd4f877' },
     { id: 'aneis', cat: 'porcoes', name: 'Anéis de Cebola', desc: 'Empanados na hora, servidos com molho barbecue.', price: 24.9, tags: [], art: { k: 'rings' } },
-    { id: 'nuggets', cat: 'porcoes', name: 'Nuggets Caseiros', desc: 'Oito unidades de frango empanado, com molho agridoce.', price: 26.9, tags: [], art: { k: 'nuggets' } },
+    { id: 'nuggets', cat: 'porcoes', name: 'Nuggets Caseiros', desc: 'Oito unidades de frango empanado, com molho agridoce.', price: 26.9, tags: [], art: { k: 'nuggets' }, img: '1566918214014-a3b3e0132267' },
 
     { id: 'refri', cat: 'bebidas', name: 'Refrigerante Lata', desc: 'Cola, guaraná ou limão. 350 ml.', price: 6.5, tags: [], art: { k: 'cup' } },
     { id: 'suco', cat: 'bebidas', name: 'Suco de Laranja', desc: 'Espremido na hora, sem açúcar. 400 ml.', price: 10, tags: [], art: { k: 'juice' } },
-    { id: 'shake', cat: 'bebidas', name: 'Shake de Doce de Leite', desc: 'Sorvete de creme, doce de leite e chantilly. 400 ml.', price: 19.9, tags: ['top'], art: { k: 'shake' } },
-    { id: 'cerveja', cat: 'bebidas', name: 'Cerveja Long Neck', desc: 'Pilsen gelada. 330 ml. Venda para maiores de 18 anos.', price: 12, tags: [], art: { k: 'beer' } },
+    { id: 'limonada', cat: 'bebidas', name: 'Limonada com Hortelã', desc: 'Limão siciliano, hortelã e gelo. 400 ml.', price: 11.9, tags: [], art: { k: 'juice' } },
+    { id: 'shake', cat: 'bebidas', name: 'Shake de Doce de Leite', desc: 'Sorvete de creme, doce de leite e chantilly. 400 ml.', price: 19.9, tags: ['top'], art: { k: 'shake' }, img: '1553787499-6f9133860278' },
+    { id: 'shake2', cat: 'bebidas', name: 'Shake de Morango', desc: 'Sorvete de creme, calda e pedaços de morango. 400 ml.', price: 19.9, tags: [], art: { k: 'shake' }, img: '1579954115545-a95591f28bfc' },
+    { id: 'cerveja', cat: 'bebidas', name: 'Cerveja Long Neck', desc: 'Pilsen gelada. 330 ml. Venda para maiores de 18 anos.', price: 12, tags: [], art: { k: 'beer' }, img: '1608270586620-248524c67de9' },
 
     { id: 'brownie', cat: 'sobremesas', name: 'Brownie com Sorvete', desc: 'Brownie morno de chocolate meio amargo e bola de creme.', price: 18.9, tags: [], art: { k: 'brownie' } },
-    { id: 'torta', cat: 'sobremesas', name: 'Torta de Limão', desc: 'Massa amanteigada, creme de limão e merengue maçaricado.', price: 14.9, tags: [], art: { k: 'torta' } }
+    { id: 'torta', cat: 'sobremesas', name: 'Torta de Limão', desc: 'Massa amanteigada, creme de limão e merengue maçaricado.', price: 14.9, tags: [], art: { k: 'torta' } },
+    { id: 'sundae', cat: 'sobremesas', name: 'Sundae de Caramelo', desc: 'Sorvete de creme, calda de caramelo salgado e amendoim crocante.', price: 15.9, tags: [], art: { k: 'shake' }, img: '1594488506255-a8bbfdeedbaf' },
+
+    { id: 'x1', cat: 'extras', name: 'Bacon extra', desc: 'Porção em fatias crocantes.', price: 5, tags: [], art: { k: 'burger', layers: ['bunB', 'bacon', 'topBun'] } },
+    { id: 'x2', cat: 'extras', name: 'Cheddar extra', desc: 'Fatia dupla derretida.', price: 4, tags: [], art: { k: 'burger', layers: ['bunB', 'cheese', 'topBun'] } },
+    { id: 'x3', cat: 'extras', name: 'Ovo na chapa', desc: 'Frito no ponto.', price: 3.5, tags: [], art: { k: 'burger', layers: ['bunB', 'onion', 'topBun'] } },
+    { id: 'x4', cat: 'extras', name: 'Molho da casa (pote)', desc: 'Receita secreta, 50 ml.', price: 3, tags: [], art: { k: 'cup' } }
   ];
   var BY = {}; ITEMS.forEach(function (i) { BY[i.id] = i; });
 
@@ -328,6 +374,12 @@ textarea.field { resize: vertical; min-height: 64px; }
   function count() { var n = 0; for (var k in cart) n += cart[k].qty; return n; }
   function subtotal() { var t = 0; for (var k in cart) t += BY[k].price * cart[k].qty; return t; }
   function mode() { return document.querySelector('input[name="mode"]:checked').value; }
+
+  /* Foto por cima do desenho; se a imagem falhar, o desenho continua aparecendo. */
+  function photo(i, w) {
+    return i.img ? '<img src="https://images.unsplash.com/photo-' + i.img + '?auto=format&fit=crop&w=' + w + '&q=70" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '';
+  }
+  document.addEventListener('error', function (e) { if (e.target && e.target.tagName === 'IMG') e.target.remove(); }, true);
 
   /* ---------- Render do cardápio ---------- */
   var rail = $('rail'), menu = $('menu');
@@ -345,7 +397,7 @@ textarea.field { resize: vertical; min-height: 64px; }
       html += '<article class="card"><button type="button" class="open" data-open="' + i.id + '">' +
         '<span class="txt"><h3 class="name">' + esc(i.name) + '</h3><p class="desc">' + esc(i.desc) + '</p>' +
         '<span class="meta"><span class="price">' + BRL.format(i.price) + '</span>' + tags + '</span></span>' +
-        '<span class="art">' + artOf(i.art) + '</span></button>' +
+        '<span class="art">' + artOf(i.art) + photo(i, 360) + '</span></button>' +
         '<button type="button" class="quick" data-quick="' + i.id + '" aria-label="Adicionar ' + esc(i.name) + ' ao pedido">+</button></article>';
     });
     sec.innerHTML = html + '</div>';
@@ -401,7 +453,7 @@ textarea.field { resize: vertical; min-height: 64px; }
   function openItem(id, trigger) {
     cur = BY[id]; curQty = 1;
     $('itName').textContent = cur.name;
-    $('itArt').innerHTML = artOf(cur.art);
+    $('itArt').innerHTML = artOf(cur.art) + photo(cur, 800);
     $('itDesc').textContent = cur.desc;
     $('itPrice').textContent = BRL.format(cur.price) + ' cada';
     $('itNote').value = '';

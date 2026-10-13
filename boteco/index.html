@@ -33,7 +33,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 0 40px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 0 40px; }
 button { font: inherit; color: inherit; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .col { max-width: 640px; margin-inline: auto; }
@@ -41,7 +41,30 @@ button { font: inherit; color: inherit; }
 .demo { max-width: 640px; margin-inline: auto; padding-block: 12px; font-size: 12px; color: var(--muted); }
 
 .sign { margin-inline: -16px; padding: 36px 16px 32px; background-color: var(--green); color: var(--green-ink);
-  background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.055) 0 2px, transparent 2px 14px); }
+  background-image: linear-gradient(180deg, rgba(14,40,29,.72), rgba(14,40,29,.94)), var(--hero-img); background-size: cover; background-position: center; position: relative; }
+.tiles { height: 22px; margin-inline: -16px; background-color: #F4EBD8;
+  background-image: linear-gradient(45deg, var(--accent) 25%, transparent 25% 75%, var(--accent) 75%), linear-gradient(45deg, var(--accent) 25%, transparent 25% 75%, var(--accent) 75%);
+  background-size: 22px 22px; background-position: 0 0, 11px 11px; opacity: .92; }
+.plaque { display: inline-flex; align-items: center; gap: 12px; align-self: flex-start; margin-bottom: 4px; }
+.plaque svg { width: 70px; height: 70px; flex: none; }
+.est { margin: 0; }
+.hl { margin-top: 26px; }
+.hl h2 { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-size: 26px; letter-spacing: -.01em; }
+.strip { display: flex; gap: 12px; overflow-x: auto; margin-inline: -16px; padding: 8px 16px 6px; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; scrollbar-width: none; }
+.strip::-webkit-scrollbar { display: none; }
+.hc { flex: none; width: 210px; scroll-snap-align: start; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.hc .ph { height: 128px; }
+.hc div.t { padding: 10px 12px 12px; }
+.hc b { display: block; font-family: var(--display); font-size: 17px; line-height: 1.2; }
+.hc span { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ph { position: relative; overflow: hidden; background: var(--soft); background-image: repeating-linear-gradient(135deg, rgba(0,0,0,.04) 0 6px, transparent 6px 12px); }
+.ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.row { display: flex; gap: 14px; align-items: flex-start; }
+.row .main { flex: 1; min-width: 0; }
+.row .ph { flex: none; width: 88px; height: 88px; border-radius: 12px; }
+.happy { margin-top: 18px; display: flex; gap: 12px; align-items: center; padding: 12px 16px; border-radius: 12px; background: var(--green); color: var(--green-ink); font-size: 14px; }
+.happy b { font-family: var(--display); font-size: 18px; display: block; }
+.credits a { color: inherit; }
 .sign .col { display: flex; flex-direction: column; gap: 10px; }
 .est { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; opacity: .8; }
 .sign h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(40px, 12.5vw, 76px); line-height: .95; letter-spacing: -.02em; overflow-wrap: anywhere; }
@@ -69,7 +92,7 @@ section { scroll-margin-top: 62px; padding-top: 34px; }
 section[hidden] { display: none; }
 h2.cat { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; letter-spacing: -.01em; }
 .sub { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
-.it { padding-block: 14px; border-top: 1px solid var(--soft); }
+.it { padding-block: 16px; border-top: 1px solid var(--soft); }
 .it:first-of-type { border-top: 0; }
 .it[hidden] { display: none; }
 .top { display: flex; align-items: baseline; gap: 8px; }
@@ -92,17 +115,18 @@ h2.cat { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-si
 
 <div class="demo"><span>Cardápio de demonstração de um negócio fictício. Pratos, preços, endereço e telefone são exemplos.</span></div>
 
-<header class="sign">
+<header class="sign" style="--hero-img:url('https://images.unsplash.com/photo-1779372178719-9476cc86a53d?auto=format&fit=crop&w=1000&q=70')">
   <div class="col">
-    <p class="est">Desde 1998 · Cozinha de boteco</p>
+    <div class="plaque"><svg viewBox="0 0 80 80" role="img" aria-label="Logotipo Boteco Ponto Final"><circle cx="40" cy="40" r="37" fill="#F4EBD8" stroke="#F4EBD8" stroke-width="2"/><circle cx="40" cy="40" r="31" fill="#C23B2B"/><path d="M18 40 H50" stroke="#F4EBD8" stroke-width="6" stroke-linecap="round"/><path d="M40 28 L52 40 L40 52" fill="none" stroke="#F4EBD8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M60 26 V54" stroke="#F4EBD8" stroke-width="6" stroke-linecap="round"/></svg><p class="est">Desde 1998 · Cozinha de boteco</p></div>
     <h1>Boteco<br>Ponto <em>Final</em></h1>
-    <p class="tag-line">Petiscos para dividir, pratos de panela e chopp tirado na hora.</p>
+    <p class="tag-line">Petiscos para dividir, pratos de panela e chopp tirado na hora. A última parada do seu dia.</p>
     <ul class="info">
       <li>Terça a domingo, 12h às 23h</li>
       <li>Rua do Exemplo, 120 · Centro</li>
     </ul>
   </div>
 </header>
+<div class="tiles" aria-hidden="true"></div>
 
 <nav class="tabs" aria-label="Seções do cardápio"><div class="tabs-in" id="tabs"></div></nav>
 
@@ -114,9 +138,14 @@ h2.cat { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-si
     <button type="button" class="f" data-f="gf" aria-pressed="false">Sem glúten</button>
   </div>
 
+  <div class="happy"><div><b>Happy hour</b>Chopp em dobro, de terça a sexta, das 17h às 19h.</div></div>
+
+  <section class="hl" aria-labelledby="hlT" style="padding-top:26px"><h2 id="hlT">Os queridinhos</h2>
+    <div class="strip" id="strip"></div></section>
+
   <aside class="today" aria-label="Sugestão do dia">
     <b>Sábado</b>
-    <h2>Feijoada completa</h2>
+    <h2 style="margin:0">Feijoada completa</h2>
     <p>Feijão preto com carnes, arroz, couve, farofa, torresmo e laranja. Serve duas pessoas. R$ 89,00.</p>
   </aside>
 
@@ -127,6 +156,7 @@ h2.cat { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-si
     <p><strong>Reservas e dúvidas:</strong> (21) 90000-0000. Número de exemplo.</p>
     <p><strong>Alergias:</strong> avise o garçom antes de pedir. A cozinha é única, então pode haver contato cruzado com glúten e outros alérgenos.</p>
     <p>A venda de bebidas alcoólicas é proibida para menores de 18 anos. Preços sujeitos a alteração. Atualizado em 13/10/2026.</p>
+    <p class="credits">Fotos: Unsplash (Jonathan Borba, Paul Hermann, Emerson Vieira, Brian Chan, Luis Aleman, Louis Hansel, Nizar Zulmi, engin akyurt, Timothy Dykes, Syed F Hashemi). Imagens ilustrativas.</p>
   </footer>
 </main>
 
@@ -136,44 +166,80 @@ h2.cat { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-si
   /* No serviço real, estes itens vêm de uma planilha que o dono edita. */
   var CATS = [
     { id: 'petiscos', name: 'Petiscos', note: 'Para dividir na mesa.' },
+    { id: 'grelha', name: 'Na brasa', note: 'Da chapa e da grelha, com farofa e vinagrete.' },
     { id: 'pratos', name: 'Pratos', note: 'Servem uma pessoa, salvo quando indicado.' },
+    { id: 'caldos', name: 'Caldos', note: 'Servidos com torradas.' },
     { id: 'bebidas', name: 'Bebidas', note: 'Sucos feitos na hora, sem açúcar, a menos que você peça.' },
+    { id: 'drinks', name: 'Cachaça e drinks', note: 'Contêm álcool. Aprecie com moderação.' },
     { id: 'cervejas', name: 'Cervejas e chopp', note: 'Bem geladas.' },
     { id: 'sobremesas', name: 'Sobremesas', note: 'Receitas da casa.' }
   ];
+  /* i = foto (Unsplash); h = aparece nos "queridinhos". Sem foto, o item aparece só com texto. */
   var ITEMS = [
-    { c: 'petiscos', n: 'Pastel de feira', d: 'Seis unidades, de queijo ou de carne, com molho de pimenta da casa.', p: 28, t: [] },
-    { c: 'petiscos', n: 'Bolinho de bacalhau', d: 'Oito unidades crocantes, com limão e maionese de ervas.', p: 36, t: [] },
+    { c: 'petiscos', n: 'Pastel de feira', d: 'Seis unidades, de queijo ou de carne, com molho de pimenta da casa.', p: 28, t: [], h: 1 },
+    { c: 'petiscos', n: 'Bolinho de bacalhau', d: 'Oito unidades crocantes, com limão e maionese de ervas.', p: 36, t: [], i: '1586793783658-261cddf883ef' },
+    { c: 'petiscos', n: 'Frango à passarinho', d: 'Coxinhas da asa fritas com alho dourado e salsinha. Meia porção ou inteira.', p: 42, t: ['gf'], i: '1426869981800-95ebf51ce900', h: 1 },
     { c: 'petiscos', n: 'Torresmo de rolo', d: 'Fatias fritas na hora, com farinha de mandioca.', p: 32, t: ['gf'] },
-    { c: 'petiscos', n: 'Mandioca frita', d: 'Com molho de alho assado.', p: 26, t: ['veg', 'gf'] },
+    { c: 'petiscos', n: 'Mandioca frita', d: 'Com molho de alho assado.', p: 26, t: ['veg', 'gf'], i: '1541592106381-b31e9677c0e5' },
     { c: 'petiscos', n: 'Calabresa acebolada', d: 'Calabresa artesanal na chapa, cebola e pão de fôrma tostado.', p: 34, t: [] },
+    { c: 'petiscos', n: 'Provolone à milanesa', d: 'Fatias de provolone empanadas, com geleia de pimenta.', p: 38, t: ['veg'] },
+    { c: 'petiscos', n: 'Isca de peixe', d: 'Tilápia empanada, molho tártaro e limão.', p: 44, t: [] },
+    { c: 'petiscos', n: 'Ovo de codorna', d: 'Conserva da casa com pimenta biquinho.', p: 18, t: ['veg', 'gf'] },
+    { c: 'petiscos', n: 'Bolinho de feijoada', d: 'Seis unidades, com couve crocante e laranja.', p: 34, t: [] },
+
+    { c: 'grelha', n: 'Picanha na chapa', d: 'Picanha fatiada, alho frito, farofa e vinagrete. Serve 2.', p: 98, t: ['2', 'gf'], i: '1558030137-a56c1b004fa3', h: 1 },
+    { c: 'grelha', n: 'Linguiça artesanal', d: 'Linguiça de pernil na brasa com mostarda e pão.', p: 36, t: [], i: '1611354609291-69aba96e45df' },
+    { c: 'grelha', n: 'Espetinho misto', d: 'Três espetos: carne, frango e coração, com farofa e vinagrete.', p: 39, t: ['gf'] },
+    { c: 'grelha', n: 'Costelinha barbecue', d: 'Costelinha suína assada lentamente e finalizada na brasa. Serve 2.', p: 89, t: ['2'], i: '1560380185-9644d262854c' },
+    { c: 'grelha', n: 'Queijo coalho', d: 'Dois espetos na brasa com melaço de cana.', p: 24, t: ['veg', 'gf'] },
 
     { c: 'pratos', n: 'Feijão tropeiro', d: 'Feijão, farinha, bacon, linguiça, couve e ovo. Acompanha arroz.', p: 44, t: ['2'] },
     { c: 'pratos', n: 'Moqueca de peixe', d: 'Peixe branco, leite de coco, dendê e pimentões. Arroz e pirão.', p: 78, t: ['2', 'gf'] },
     { c: 'pratos', n: 'Filé à parmegiana', d: 'Filé empanado com molho de tomate e muçarela gratinada. Arroz e batata frita.', p: 56, t: [] },
+    { c: 'pratos', n: 'Rabada com agrião', d: 'Cozida por oito horas, com polenta cremosa.', p: 64, t: ['gf'] },
     { c: 'pratos', n: 'Risoto de cogumelos', d: 'Arroz arbóreo, cogumelos frescos e parmesão.', p: 52, t: ['veg'] },
     { c: 'pratos', n: 'Salada de grão-de-bico', d: 'Grão-de-bico, tomate, pepino, cebola roxa e hortelã.', p: 34, t: ['veg', 'gf'] },
+    { c: 'pratos', n: 'Executivo do dia', d: 'Prato feito com proteína do dia, arroz, feijão, salada e fritas. Só no almoço.', p: 32, t: [] },
+
+    { c: 'caldos', n: 'Caldo verde', d: 'Batata, couve e calabresa.', p: 22, t: [] },
+    { c: 'caldos', n: 'Caldo de feijão', d: 'Feijão batido, bacon e cebolinha.', p: 20, t: [] },
+    { c: 'caldos', n: 'Caldo de abóbora', d: 'Abóbora, gengibre e carne seca desfiada.', p: 24, t: [] },
 
     { c: 'bebidas', n: 'Suco da fruta', d: 'Laranja, maracujá, abacaxi com hortelã ou acerola. 400 ml.', p: 11, t: ['veg', 'gf'] },
     { c: 'bebidas', n: 'Limonada suíça', d: 'Limão batido com leite condensado. 400 ml.', p: 13, t: ['veg', 'gf'] },
-    { c: 'bebidas', n: 'Caipirinha', d: 'Limão, cachaça artesanal, açúcar e gelo. Contém álcool.', p: 22, t: ['veg', 'gf'] },
     { c: 'bebidas', n: 'Refrigerante lata', d: 'Cola, guaraná ou limão. 350 ml.', p: 7, t: [] },
     { c: 'bebidas', n: 'Água', d: 'Com ou sem gás. 500 ml.', p: 5, t: ['veg', 'gf'] },
 
-    { c: 'cervejas', n: 'Chopp pilsen', d: 'Tirado na pressão. 300 ml.', p: 10, t: [] },
-    { c: 'cervejas', n: 'Chopp IPA', d: 'Lúpulo marcante, amargor médio. 300 ml.', p: 12, t: [] },
+    { c: 'drinks', n: 'Caipirinha', d: 'Limão, cachaça artesanal, açúcar e gelo. Contém álcool.', p: 22, t: ['veg', 'gf'], h: 1 },
+    { c: 'drinks', n: 'Caipirinha de frutas', d: 'Maracujá, morango, kiwi ou abacaxi com hortelã.', p: 25, t: ['veg', 'gf'] },
+    { c: 'drinks', n: 'Batida de coco', d: 'Cachaça, leite de coco e leite condensado.', p: 24, t: ['veg', 'gf'] },
+    { c: 'drinks', n: 'Dose de cachaça', d: 'Rótulos artesanais de Minas e do Rio. Pergunte ao garçom.', p: 12, t: ['veg', 'gf'] },
+    { c: 'drinks', n: 'Rabo de galo', d: 'Cachaça, vermute e bitter.', p: 20, t: ['veg', 'gf'] },
+
+    { c: 'cervejas', n: 'Chopp pilsen', d: 'Tirado na pressão. 300 ml.', p: 10, t: [], i: '1608270586620-248524c67de9', h: 1 },
+    { c: 'cervejas', n: 'Chopp IPA', d: 'Lúpulo marcante, amargor médio. 300 ml.', p: 12, t: [], i: '1571613316887-6f8d5cbf7ef7' },
     { c: 'cervejas', n: 'Long neck', d: 'Pilsen ou puro malte. 330 ml.', p: 12, t: [] },
     { c: 'cervejas', n: 'Garrafa 600 ml', d: 'Pilsen para dividir.', p: 18, t: [] },
+    { c: 'cervejas', n: 'Torre de chopp', d: 'Três litros na mesa, com torneira.', p: 98, t: [], i: '1567696911980-2eed69a46042' },
 
     { c: 'sobremesas', n: 'Pudim de leite', d: 'Calda de caramelo e uma pitada de sal.', p: 16, t: ['veg', 'gf'] },
     { c: 'sobremesas', n: 'Doce de leite com queijo', d: 'Doce cremoso com queijo minas curado.', p: 18, t: ['veg', 'gf'] },
-    { c: 'sobremesas', n: 'Sorvete artesanal', d: 'Duas bolas: coco queimado, cupuaçu ou chocolate meio amargo.', p: 17, t: ['veg'] }
+    { c: 'sobremesas', n: 'Sorvete artesanal', d: 'Duas bolas: coco queimado, cupuaçu ou chocolate meio amargo.', p: 17, t: ['veg'] },
+    { c: 'sobremesas', n: 'Mousse de maracujá', d: 'Com raspas de limão.', p: 14, t: ['veg', 'gf'] }
   ];
   var LABEL = { veg: 'Vegetariano', gf: 'Sem glúten', '2': 'Serve 2' };
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   var $ = function (id) { return document.getElementById(id); };
+  function img(id, w) { return '<img src="https://images.unsplash.com/photo-' + id + '?auto=format&fit=crop&w=' + w + '&q=70" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">'; }
+  /* Se uma foto não carregar, ela some e o espaço fica com a textura de fundo. */
+  document.addEventListener('error', function (e) { if (e.target && e.target.tagName === 'IMG') e.target.remove(); }, true);
   var tabs = $('tabs'), menu = $('menu');
+  var strip = $('strip');
+  ITEMS.filter(function (i) { return i.h && i.i; }).forEach(function (i) {
+    strip.insertAdjacentHTML('beforeend', '<div class="hc"><div class="ph">' + img(i.i, 420) + '</div><div class="t"><b>' + esc(i.n) + '</b><span>R$ ' + BRL.format(i.p) + '</span></div></div>');
+  });
+  if (!strip.children.length) strip.parentNode.hidden = true;
 
   CATS.forEach(function (c) {
     var b = document.createElement('button');
@@ -186,9 +252,10 @@ h2.cat { margin: 0 0 4px; font-family: var(--display); font-weight: 800; font-si
     var h = '<h2 class="cat">' + esc(c.name) + '</h2><p class="sub">' + esc(c.note) + '</p>';
     ITEMS.filter(function (i) { return i.c === c.id; }).forEach(function (i) {
       var tg = i.t.map(function (k) { return '<span class="tg">' + LABEL[k] + '</span>'; }).join('');
-      h += '<div class="it" data-t="' + i.t.join(' ') + '"><div class="top"><h3>' + esc(i.n) + '</h3><span class="lead" aria-hidden="true"></span>' +
+      var ph = i.i ? '<div class="ph">' + img(i.i, 240) + '</div>' : '';
+      h += '<div class="it" data-t="' + i.t.join(' ') + '"><div class="row"><div class="main"><div class="top"><h3>' + esc(i.n) + '</h3><span class="lead" aria-hidden="true"></span>' +
         '<span class="price"><small>R$</small>' + BRL.format(i.p) + '</span></div><p>' + esc(i.d) + '</p>' +
-        (tg ? '<div class="tags">' + tg + '</div>' : '') + '</div>';
+        (tg ? '<div class="tags">' + tg + '</div>' : '') + '</div>' + ph + '</div></div>';
     });
     sec.innerHTML = h;
     menu.appendChild(sec);
